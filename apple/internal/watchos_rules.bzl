@@ -225,7 +225,6 @@ def _watchos_dynamic_framework_impl(ctx):
         ),
         partials.debug_symbols_partial(
             actions = actions,
-            bin_root_path = bin_root_path,
             bundle_extension = bundle_extension,
             bundle_name = bundle_name,
             debug_dependencies = ctx.attr.frameworks,
@@ -233,7 +232,6 @@ def _watchos_dynamic_framework_impl(ctx):
             executable_name = executable_name,
             linkmaps = debug_outputs.linkmaps,
             platform_prerequisites = platform_prerequisites,
-            rule_label = label,
         ),
         partials.embedded_bundles_partial(
             frameworks = [archive_for_embedding],
@@ -339,7 +337,6 @@ def _watchos_application_impl(ctx):
     actions = ctx.actions
     apple_mac_toolchain_info = ctx.attr._mac_toolchain[AppleMacToolsToolchainInfo]
     apple_xplat_toolchain_info = ctx.attr._xplat_toolchain[AppleXPlatToolsToolchainInfo]
-    bin_root_path = ctx.bin_dir.path
     bundle_id = ctx.attr.bundle_id
     bundle_name, bundle_extension = bundling_support.bundle_full_name_from_rule_ctx(ctx)
     executable_name = bundling_support.executable_name(ctx)
@@ -456,14 +453,12 @@ def _watchos_application_impl(ctx):
         ),
         partials.debug_symbols_partial(
             actions = actions,
-            bin_root_path = bin_root_path,
             bundle_extension = bundle_extension,
             bundle_name = bundle_name,
             debug_dependencies = [ctx.attr.extension],
             dsym_info_plist_template = apple_mac_toolchain_info.dsym_info_plist_template,
             executable_name = executable_name,
             platform_prerequisites = platform_prerequisites,
-            rule_label = label,
         ),
         partials.embedded_bundles_partial(
             bundle_embedded_bundles = True,
@@ -546,7 +541,6 @@ def _watchos_extension_impl(ctx):
     actions = ctx.actions
     apple_mac_toolchain_info = ctx.attr._mac_toolchain[AppleMacToolsToolchainInfo]
     apple_xplat_toolchain_info = ctx.attr._xplat_toolchain[AppleXPlatToolsToolchainInfo]
-    bin_root_path = ctx.bin_dir.path
     bundle_id = ctx.attr.bundle_id
     bundle_name, bundle_extension = bundling_support.bundle_full_name_from_rule_ctx(ctx)
     executable_name = bundling_support.executable_name(ctx)
@@ -684,7 +678,6 @@ def _watchos_extension_impl(ctx):
         ),
         partials.debug_symbols_partial(
             actions = actions,
-            bin_root_path = bin_root_path,
             bundle_extension = bundle_extension,
             bundle_name = bundle_name,
             debug_dependencies = ctx.attr.extensions,
@@ -693,7 +686,6 @@ def _watchos_extension_impl(ctx):
             executable_name = executable_name,
             linkmaps = debug_outputs.linkmaps,
             platform_prerequisites = platform_prerequisites,
-            rule_label = label,
         ),
         partials.embedded_bundles_partial(
             bundle_embedded_bundles = True,
